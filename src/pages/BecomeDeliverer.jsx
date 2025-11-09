@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Truck, ArrowLeft, Loader2, MapPin, Phone } from 'lucide-react'
 import { setDeliverer } from '../store/slices/authSlice'
-import { registerDeliverer } from '../store/slices/delivererSlice'
+import { registerDeliverer, fetchDelivererStatus } from '../store/slices/delivererSlice'
+import { apiClient } from '../utils/apiClient'
 import { useToast } from '../contexts/ToastContext'
 import { useVerificationError } from '../hooks/useVerificationError'
 import './BecomeDeliverer.css'
@@ -33,7 +34,6 @@ function BecomeDeliverer() {
       
       setCheckingDeliverer(true)
       try {
-        const { fetchDelivererStatus } = await import('../store/slices/delivererSlice')
         const result = await dispatch(fetchDelivererStatus()).unwrap()
         
         if (result.is_deliverer && result.deliverer) {
@@ -71,7 +71,6 @@ function BecomeDeliverer() {
       
       setCheckingHostel(true)
       try {
-        const { apiClient } = await import('../utils/apiClient')
         const response = await apiClient.get('/user/hostel/')
         const data = response.data
         

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { setAuth } from '../store/slices/authSlice'
+import { fetchDelivererStatus } from '../store/slices/delivererSlice'
 import { login, checkEntrepreneurWithToken } from '../services/authService'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import { useToast } from '../contexts/ToastContext'
@@ -102,7 +103,6 @@ function Login() {
         let delivererData = null
         
         try {
-          const { fetchDelivererStatus } = await import('../store/slices/delivererSlice')
           const delivererStatus = await dispatch(fetchDelivererStatus()).unwrap()
           if (delivererStatus.is_deliverer && delivererStatus.deliverer) {
             console.log('User is a deliverer', delivererStatus)
